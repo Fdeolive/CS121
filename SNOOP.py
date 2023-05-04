@@ -31,7 +31,7 @@ def response(text):
     CHUNK_SIZE = 1024
     url = "https://api.elevenlabs.io/v1/text-to-speech/sB2RryECBQpVI5VSPfTN"
 
-    headers = {"Accept": "audio/mpeg","Content-Type": "application/json","xi-api-key": "e5e9659f93ff737ca4e732724fbd48de"}
+    headers = {"Accept": "audio/mpeg","Content-Type": "application/json","xi-api-key": ""}
 
     data = {"text":text,"voice_settings": {"stability": 0,"similarity_boost": 0}}
 
@@ -58,7 +58,7 @@ def main():
           audio=listen()
           #Weather api
           if "weather" in audio:
-           weather_data = requests.get('https://api.openweathermap.org/data/2.5/weather?zip=05405,us&appid=442c5a0f2d168e78d9b6412f248aca19&units=imperial').json()
+           weather_data = requests.get('https://api.openweathermap.org/data/2.5/weather?zip=05405,us&appid=&units=imperial').json()
            ftemp=weather_data['main']['temp']
            response(f"{ftemp} degrees fahrenheit")
 
@@ -66,9 +66,9 @@ def main():
           if "play" in audio: 
           
            manager = spotipy.oauth2.SpotifyOAuth(scope='user-modify-playback-state',
-                                                                    username="1212878785",
-                                                                    client_id="2d93cd3bcd2a401485ef8133345f59bf",
-                                                                    client_secret="d740e820345c4edc81744d036e22fc5f",
+                                                                    username="",
+                                                                    client_id="",
+                                                                    client_secret="",
                                                                     redirect_uri='http://localhost:8888/callback')
            
            rs = spotipy.Spotify(client_credentials_manager=manager)
@@ -93,7 +93,7 @@ def main():
            track_uri =items[0]['uri']
            
            #Plays songs
-           rs.start_playback(device_id="d230f7a82c5d1e4d61da3b449f218aaff3a1d1ea",uris=[track_uri])
+           rs.start_playback(device_id="",uris=[track_uri])
            #Pauses Song
           if 'pause' in audio:
             rs.pause_playback()
@@ -102,7 +102,7 @@ def main():
           #ChatGPT API
           if "what" or "who" or "how" or "where" in audio:
            message=[{"role":"system","content":audio}]
-           openai.api_key = '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'
+           openai.api_key = ''
            response1= openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=message)
            reply=response1.choices[0].message
            content=reply.content
